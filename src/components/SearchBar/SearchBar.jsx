@@ -1,36 +1,34 @@
-import { Component } from "react";
+import {  useState } from "react";
 
 import PropTypes from 'prop-types';
 
 import { FiSearch } from 'react-icons/fi';
 import { Btn, Form, Header, Input } from "./SearchBar.styled";
 
-export class SearchBar extends Component  {
-    state = {
-        searchQuery: '',
-    };
+export const SearchBar = ({onSubmit}) => {
+  
+  const [searchQuery, setSearchQuery] = useState('');
 
-
-    handleSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
-        if (this.state.searchQuery.trim() === "") {
+        if (searchQuery.trim() === "") {
             return alert(
               'The search field cannot be empty. Please enter a query and try again.'
             );
         }
-        this.props.onSubmit(this.state.searchQuery);
-        this.setState({ searchQuery: '' })
+        onSubmit(searchQuery);
+      setSearchQuery('');
     }
 
-    handleChange = e => { 
-        this.setState({ searchQuery: e.currentTarget.value.toLowerCase() });
+    const handleChange = e => { 
+setSearchQuery(e.currentTarget.value.toLowerCase());
     }
 
 
-    render() {
+   
         return (
           <Header>
-                <Form onSubmit={ this.handleSubmit}>
+                <Form onSubmit={ handleSubmit}>
               <Btn type="submit">
                         <span>
                             <FiSearch />
@@ -43,15 +41,14 @@ export class SearchBar extends Component  {
                 autoFocus
                         placeholder="Search images and photos"
                         name='searchQuery'
-                        value={this.state.searchQuery}
-                        onChange={this.handleChange}
+                        value={searchQuery}
+                        onChange={handleChange}
               />
             </Form>
           </Header>
         );
     }
     
-}
 
 SearchBar.propTypes = {
 onSubmit: PropTypes.func,
