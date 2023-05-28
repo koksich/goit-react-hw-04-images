@@ -68,7 +68,8 @@ export const App = () => {
       <>
         <SearchBar onSubmit={formSubmit} />
         {isLoading && images.length === 0 ? <Loader /> : (<ImageGallery images={images} openModal = {openModal} />)}
-        {!isLoading && loadMore && (
+      { error && <p>Something went wrong</p> } 
+      {!isLoading && loadMore && (
           (<Button onLoadMore={onLoadMore} page={page} />)
         )}
         {showModal && (<Modal onClose={closeModal} largeImageURL={largeImageURL}>
